@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 import javax.annotation.Nonnull;
 import javax.xml.bind.JAXBException;
 
@@ -43,7 +44,8 @@ public class GarminDataTypeSlowTest {
 		try (InputStream inputStream = getClass().getResourceAsStream(ACTIVITY_148656142_TCX)) {
 			TrainingCenterDatabaseT trainingCenterDatabase = JAXBObject.TRAINING_CENTER_DATABASE.unmarshall(inputStream);
 			Assert.assertEquals("activities size incorrect", 1, trainingCenterDatabase.getActivities().getActivity().size());
-			Calendar expected = Calendar.getInstance();
+			TimeZone timeZone = TimeZone.getTimeZone("UTC");
+			Calendar expected = Calendar.getInstance(timeZone);
 			expected.set(2012, Calendar.FEBRUARY, 11, 9, 31, 5);
 			expected.set(Calendar.MILLISECOND, 0);
 			Date startTime = trainingCenterDatabase.getActivities().getActivity().get(0).getId().toGregorianCalendar().getTime();
@@ -56,7 +58,8 @@ public class GarminDataTypeSlowTest {
 		Assert.assertNotNull("Test file missing", getClass().getResource(ACTIVITY_148656142_GPX));
 		try (InputStream inputStream = getClass().getResourceAsStream(ACTIVITY_148656142_GPX)) {
 			GpxType gpxType = JAXBObject.GPX_TYPE.unmarshall(inputStream);
-			Calendar expected = Calendar.getInstance();
+			TimeZone timeZone = TimeZone.getTimeZone("UTC");
+			Calendar expected = Calendar.getInstance(timeZone);
 			expected.set(2012, Calendar.FEBRUARY, 11, 9, 31, 5);
 			expected.set(Calendar.MILLISECOND, 0);
 
